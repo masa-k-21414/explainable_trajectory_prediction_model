@@ -4,11 +4,11 @@
 Recent advances in deep learning have led to the application of computer vision technology. For such practical and safety-critical applications, it is important to be able to explain the rationale behind the computer's decisions in addition to guaranteeing its performance. We deal with trajectory prediction models, a type of action prediction model. Trajectory prediction is a technology that can be applied not only to behavior prediction, but also to behavior analysis and tracking. In recent years, the use of deep learning has improved the accuracy of trajectory prediction, but at the same time, it has inherited the nature of deep models that are unclear in their interpretation. Existing models predict natural trajectories by learning two interactions: interactions from surrounding people (person-person interactions) and interactions from the surrounding environment (person-space interactions). We visualize these interactions using a attention module to visualize the basis for the trajectory prediction model. Although there are existing methods that use the attention module, they are learned without any constraints on attention, and thus produce results that are difficult to interpret. In this study, as shown, by conditioning attention using pseudoattention in which human knowledge is quantified in advance, we stabilize attention estimation and at the same time, obtain a basis for the decision that can be interpreted from the human point of view.
 
 ## Prepare Data
-SDD raw data comes from [Stanford Drone Dataset](https://cvgl.stanford.edu/projects/uav_data/).
-Edit train.txt, val.txt, test.txt (the "~/" part) according to the directory. 
+SDD raw data comes from [Stanford Drone Dataset](https://cvgl.stanford.edu/projects/uav_data/).\\
+Edit train.txt, val.txt, and test.txt according to the directory where the data was saved.
 
 ## Requirements
-The codes are developed with python 3.9.
+The codes are developed with python 3.6.9.
 Additional packages used are included in the `requirements.txt` file.
 
 ```bash
