@@ -1,0 +1,11 @@
+~/stanford/annotations/coupa/video1
+~/stanford/annotations/bookstore/video3
+~/stanford/annotations/little/video2
+~/stanford/annotations/little/video3
+~/stanford/annotations/nexus/video4
+~/stanford/annotations/nexus/video7
+~/stanford/annotations/hyang/video4
+~/stanford/annotations/quad/video2
+~/stanford/annotations/gates/video1
+~/stanford/annotations/gates/video3
+~/stanford/annotations/gates/video4

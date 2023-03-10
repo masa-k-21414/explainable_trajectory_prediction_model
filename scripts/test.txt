@@ -1,0 +1,13 @@
+~/stanford/annotations/deathCircle/video4
+~/stanford/annotations/hyang/video7
+~/stanford/annotations/nexus/video3
+~/stanford/annotations/little/video1
+~/stanford/annotations/bookstore/video6
+~/stanford/annotations/gates/video7
+~/stanford/annotations/gates/video8
+~/stanford/annotations/hyang/video2
+~/stanford/annotations/hyang/video3
+~/stanford/annotations/hyang/video6
+~/stanford/annotations/hyang/video11
+~/stanford/annotations/hyang/video13
+~/stanford/annotations/nexus/video3
