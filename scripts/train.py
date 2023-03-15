@@ -6,7 +6,6 @@ import sys
 import time
 
 from torch.optim.lr_scheduler import StepLR
-from model.data.e_loader import e_data_loader
 from model.data.loader import data_loader
 from model.losses import gan_g_loss, gan_d_loss, l2_loss, a_l2_loss
 from model.losses import displacement_error, final_displacement_error
@@ -597,14 +596,12 @@ def main(args):
 def discriminator_step(args, batch, generator, discriminator, d_loss_fn, optimizer_d, scaler=None):
     img = batch[-1]
     batch = [tensor.cuda() for tensor in batch[:-1]]
-    if not args.easy:
-        (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
-    else:
-        (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+
+    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
     losses = {}
     loss = torch.zeros(1).to(pred_traj_gt)
     if scaler == None:
-        if args.easy == False and args.LSTM == False:
+        if args.LSTM == False:
             generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
         else:
             generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end)
@@ -661,10 +658,8 @@ def discriminator_step(args, batch, generator, discriminator, d_loss_fn, optimiz
 def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g, scaler=None, GAN=False):
     img = batch[-1]
     batch = [tensor.cuda() for tensor in batch[:-1]]
-    if not args.easy:
-        (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
-    else:
-        (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+    
+    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
     losses = {}
     loss = torch.zeros(1).to(pred_traj_gt)
     g_l2_loss = []
@@ -674,7 +669,7 @@ def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g
     if scaler==None:
         if GAN:
             for _ in range(args.best_k):
-                if args.easy == False and args.LSTM == False:
+                if  args.LSTM == False:
                     generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
                 else:
                     generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end)
@@ -724,7 +719,7 @@ def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g
             losses['G_total_loss'] = loss.item()
         else:
             t1 = time.time()
-            if args.easy == False and args.LSTM == False:
+            if  args.LSTM == False:
                 generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
             else:
                 generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end)
@@ -761,7 +756,7 @@ def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g
         with torch.cuda.amp.autocast():
             if GAN:
                 for _ in range(args.best_k):
-                    if args.easy == False and args.LSTM == False:
+                    if args.LSTM == False:
                         generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
                     else:
                         generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end)
@@ -813,7 +808,7 @@ def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g
             else:
             # for _ in range(args.best_k):
                 t1 = time.time()
-                if args.easy == False and args.LSTM == False:
+                if args.LSTM == False:
                     generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
                 else:
                     generator_out = generator(img, obs_traj, obs_traj_rel, seq_start_end)
@@ -868,15 +863,13 @@ def check_accuracy(args, loader, generator, discriminator, d_loss_fn, limit=Fals
         for batch in loader:
             img = batch[-1] 
             batch = [tensor.cuda() for tensor in batch[:-1]]
-            if not args.easy:
-                (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
-            else:
-                (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+            
+            (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
 
             linear_ped = 1 - non_linear_ped
             loss_mask = loss_mask[:, args.obs_len:]
 
-            if args.easy == False and args.LSTM == False:
+            if args.LSTM == False:
                 pred_traj_fake, pred_traj_fake_rel, _ = generator(img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
             else:
                 pred_traj_fake, pred_traj_fake_rel, _ = generator(img, obs_traj, obs_traj_rel, seq_start_end)

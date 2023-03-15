@@ -214,7 +214,7 @@ def evaluate(args, loader, num_samples, plt_size, path, f_path):
             for (start, end) in seq_start_end:
                 if args.directory_save:
                     fig_size = 512
-                    if not os.path.exists("{}/sample{}".format(f_path,sample)):
+                    if args.directory_save and not os.path.exists("{}/sample{}".format(f_path,sample)):
                         os.mkdir("{}/sample{}".format(f_path,sample))
                     gt_path = "{}/sample{}".format(f_path, sample)
                 

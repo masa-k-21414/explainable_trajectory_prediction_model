@@ -174,7 +174,7 @@ def evaluate(args, loader, num_samples, plt_size, path, f_path):
         if sample < num_samples:
             sq_num = 0
             for (start, end) in seq_start_end:
-                if not os.path.exists("{}/sample{}".format(f_path,sample)):
+                if args.directory_save and not os.path.exists("{}/sample{}".format(f_path,sample)):
                     os.mkdir("{}/sample{}".format(f_path,sample))
                 gt_path = "{}/sample{}".format(f_path, sample)
                 pd_num = int(end - start)
