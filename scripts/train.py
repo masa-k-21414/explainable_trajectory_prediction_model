@@ -597,7 +597,7 @@ def discriminator_step(args, batch, generator, discriminator, d_loss_fn, optimiz
     img = batch[-1]
     batch = [tensor.cuda() for tensor in batch[:-1]]
 
-    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
     losses = {}
     loss = torch.zeros(1).to(pred_traj_gt)
     if scaler == None:
@@ -659,7 +659,7 @@ def generator_step(args, batch, generator, discriminator, g_loss_fn, optimizer_g
     img = batch[-1]
     batch = [tensor.cuda() for tensor in batch[:-1]]
     
-    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+    (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
     losses = {}
     loss = torch.zeros(1).to(pred_traj_gt)
     g_l2_loss = []
@@ -864,7 +864,7 @@ def check_accuracy(args, loader, generator, discriminator, d_loss_fn, limit=Fals
             img = batch[-1] 
             batch = [tensor.cuda() for tensor in batch[:-1]]
             
-            (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
+            (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
 
             linear_ped = 1 - non_linear_ped
             loss_mask = loss_mask[:, args.obs_len:]
