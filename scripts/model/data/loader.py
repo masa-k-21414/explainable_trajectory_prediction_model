@@ -22,7 +22,7 @@ def data_loader(args, path):
         remake_data=args.remake_data,
         check_so_at=args.check_so_at)
     
-    elif args.physical_attention_type == 'prior3' or args.physical_attention_type == 'prior4' or args.physical_attention_type == 'prior5' or args.physical_attention_type == 'prior6'  or args.physical_attention_type == 'self_attention':
+    if args.physical_attention_type == 'prior3' or args.physical_attention_type == 'prior4' or args.physical_attention_type == 'prior5' or args.physical_attention_type == 'prior6'  or args.physical_attention_type == 'self_attention':
         loader = DataLoader(
             dset,
             batch_size=args.batch_size,
@@ -59,7 +59,7 @@ def test_data_loader(args, path):
         check_so_at=args.check_so_at,
         test=True)
 
-    elif args.physical_attention_type == 'prior3' or args.physical_attention_type == 'prior4' or args.physical_attention_type == 'prior5' or args.physical_attention_type == 'prior6' or args.physical_attention_type == 'self_attention':
+    if args.physical_attention_type == 'prior3' or args.physical_attention_type == 'prior4' or args.physical_attention_type == 'prior5' or args.physical_attention_type == 'prior6' or args.physical_attention_type == 'self_attention':
         loader = DataLoader(
             dset,
             batch_size=args.batch_size,
