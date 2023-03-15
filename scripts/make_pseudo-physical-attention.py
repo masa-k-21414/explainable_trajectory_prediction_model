@@ -317,9 +317,10 @@ def main(args):
                 os.mkdir("./ph_attention/{}/{}".format(args.a_type, path.split('/')[-2]))
             if not os.path.exists("./ph_attention/{}/{}/{}".format(args.a_type, path.split('/')[-2], path.split('/')[-1])):
                 os.mkdir("./ph_attention/{}/{}/{}".format(args.a_type, path.split('/')[-2], path.split('/')[-1]))
-
-            dset, loader = test_data_loader(args, [path]) 
             f_path = "./ph_attention/{}/{}/{}".format(args.d_type, path.split('/')[-2], path.split('/')[-1])
+
+        dset, loader = test_data_loader(args, [path]) 
+        
 
         evaluate(args, loader, args.num_samples, args.size, path, f_path)
 
