@@ -153,7 +153,7 @@ def cut(x, y, mu, r=24, size=56):
     v = np.zeros((size,size))
     for i in range(x.shape[0]):
         if (x[i]-(mu[0]*size))**2 + (y[i]- (mu[1]*size))**2 > r**2:
-            v[y[i], x[i]] = -float('inf')
+            v[i] = -float('inf')
     return v
 
 def cut_cut(W, xy, vector, size=56):
