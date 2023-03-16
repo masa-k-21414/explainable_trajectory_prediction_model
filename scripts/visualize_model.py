@@ -33,7 +33,7 @@ logger.setLevel(logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_num', default='444', type=str)
-parser.add_argument('--data_dir_path', default='./a_test.txt', type=str)
+parser.add_argument('--data_dir_path', default='./test.txt', type=str)
 parser.add_argument('--frame', default=20, type=int)
 parser.add_argument('--data', default=100, type=int)
 parser.add_argument('--num_samples', default=20, type=int)
@@ -583,7 +583,7 @@ def main(args):
             if p_args == 0 or p_args !=  [_args.center_crop, _args.norm, _args.min_ped, _args.max_ped, large_image, ph]:
                 print('[INFO: visualize_model.py]: Data loader. large_image:{}.'.format(large_image))
                 _, loader = test_data_loader(_args, [test_path])  
-
+            os.makedirs('./video', exist_ok=True)
             if not os.path.exists("./video/checkpoint_with_model_{}".format(model_num)):
                 os.mkdir("./video/checkpoint_with_model_{}".format(model_num))
             if not os.path.exists("./video/checkpoint_with_model_{}/{}".format(model_num, video_num)):
