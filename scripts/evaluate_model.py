@@ -9,7 +9,7 @@ from model.losses import displacement_error, final_displacement_error
 from model.data.loader import test_data_loader
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_dir_path', default='./a_test.txt', type=str)
+parser.add_argument('--data_dir_path', default='./test.txt', type=str)
 parser.add_argument('--model_num', default='', type=str)
 
 def get_generator(checkpoint):
@@ -68,7 +68,7 @@ def get_generator(checkpoint):
             use_seg=args.use_seg, 
             vgg_train=args.vgg_train, 
             add_input=args.add_input,
-            easy=args.easy,
+            #easy=args.easy,
             artificial_social_attention=args.artificial_social_attention,
             visualize=True)
     generator.load_state_dict(checkpoint['g_state'])
