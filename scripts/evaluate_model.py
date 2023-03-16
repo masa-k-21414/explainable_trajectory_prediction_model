@@ -120,8 +120,8 @@ def evaluate(args, loader, generator, num_samples=1):
             
             input_img = batch[-2]
             batch = [tensor.cuda() for tensor in batch[:-2]]
-
-            if not args.easy:
+            easy = args.physical_attention_type == 'prior3' or args.physical_attention_type == 'prior4' or args.physical_attention_type == 'prior5' or args.physical_attention_type == 'prior6' or args.physical_attention_type == 'self_attention'
+            if not easy:
                 (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end, social_prior_attention, physical_prior_attention) = batch
             else:
                 (obs_traj, pred_traj_gt, obs_traj_rel, pred_traj_gt_rel, non_linear_ped, loss_mask, seq_start_end) = batch
@@ -133,7 +133,7 @@ def evaluate(args, loader, generator, num_samples=1):
                 if args.LSTM:
                     pred_traj_fake, _ = generator(input_img, obs_traj, obs_traj_rel, seq_start_end)
                 else:
-                    if not args.easy:
+                    if not easy:
                         pred_traj_fake, _, _, _, _ = generator(input_img, obs_traj, obs_traj_rel, seq_start_end, so_prior=social_prior_attention, ph_prior=physical_prior_attention)
                     else:
                         pred_traj_fake, _, _, _, _ = generator(input_img, obs_traj, obs_traj_rel, seq_start_end)
