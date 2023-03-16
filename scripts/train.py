@@ -174,7 +174,8 @@ def main(args):
         restore_path = args.checkpoint_start_from
     elif args.restore_from_checkpoint == 1:
         restore_path = os.path.join(args.output_dir, '{}_{}.pt'.format(args.checkpoint_name, args.checkpoint_num))
-
+    os.makedirs(args.output_dir, exist_ok=True)
+    
     # check the model have not finished learning
     if restore_path is not None and os.path.isfile(restore_path):
         logger.info('Restoring from checkpoint {}'.format(restore_path))
